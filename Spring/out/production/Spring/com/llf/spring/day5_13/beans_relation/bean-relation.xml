@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!-- bean之间的关系 测试继承关系
+        如果被继承的bean被声明为abstract="true" ,则不能被IOC容器实例化
+        若父类bean没指定class此时必须声明属性abstract="true"
+    -->
+    <!--<bean id="car" class="com.llf.spring.day5_13.beans_relation.Car"-->
+          <!--p:carName="BWM" p:price="260000" p:speed="290" abstract="false"></bean>-->
+    <bean id="car" p:carName="BWM" p:price="260000" p:speed="290" abstract="true">
+    </bean>
+    <!--使用bean的parents属性指定继承那个bean   子bean也可以重新给属性赋值,没重新赋值的还是父bean的值-->
+    <!--<bean id="car1" p:carName="auto" p:price="290000" parent="car">-->
+    <!--</bean>-->
+
+    <!-- 父bean为抽象bean时，继承父bean的子bean 声明class，继承了父bean里的属性，属性也可重新赋值-->
+    <bean id="car2" parent="car" class="com.llf.spring.day5_13.beans_relation.Car"
+            p:carName="llf"></bean>
+
+    <!-- bean之间的依赖关系  如下person依赖car2的bean，没有定义car2的话会报错，依赖car2bean，不会输出cars里的值-->
+    <bean id="person" class="com.llf.spring.day5_13.beans_relation.Person"
+            p:name="林灵凡" depends-on="car2"></bean>
+    <!-- bean的作用域
+        singleton是默认值，容器初始时创建的bean，整个容器生命周期内只创建这一个bean，单例的
+        prototype 原型的，容器初始化时不创建bean，只在每次请求时都创建一个新的bean，并返回，(整合struts2的action时用的比较多)
+        WEB 环境作用域 session和request
+    -->
+    <bean id="person2" class="com.llf.spring.day5_13.beans_relation.Person" scope="prototype"
+            p:name="fzy"></bean>
+
+</beans>

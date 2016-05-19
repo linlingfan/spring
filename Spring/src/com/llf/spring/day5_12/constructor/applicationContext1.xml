@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<!-- 配置一个 bean -->
+	<bean id="helloSpring" class="com.llf.spring.day5_12.hellospring.HelloSpring">
+		<!-- 为属性赋值 -->
+		<property name="name" value="linlingfan"></property>
+	</bean>
+
+
+	<!--创建一个car的bean-->
+	<bean id="car" class="com.llf.spring.day5_12.constructor.Car">
+		<property name="carName" value="Aodi"></property>
+		<property name="price" value="270000"></property>
+		<property name="speed" value="278"></property>
+	</bean>
+	<!-- 通过构造器注入属性值 -->
+	<bean id="car1" class="com.llf.spring.day5_12.constructor.Car">
+		<!-- 要求: 在 Bean 中必须有对应的构造器.  -->
+		<constructor-arg value="Ford" index="0"></constructor-arg>
+		<constructor-arg value="300000" index="1"></constructor-arg>
+		<constructor-arg type="int">
+			<value>260</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 若一个 bean 有多个构造器, 如何通过构造器来为 bean 的属性赋值 -->
+	<!-- 可以根据 index 和 value 进行更加精确的定位. (了解) -->
+	<bean id="car2" class="com.llf.spring.day5_12.constructor.Car">
+		<constructor-arg index="0">
+			<!--若字面值中包含特殊字符如要打出<BWM>, 则可以使用 DCDATA 来进行赋值. (了解)-->
+			<value><![CDATA[<BMW>]]></value>
+		</constructor-arg>
+		<constructor-arg value="250000" type="double" index="1"></constructor-arg>
+	</bean>
+
+	<!--测试 引用其他的Bean 创建person的Bean 引用car的bean -->
+	<!--<bean id="person" class="com.llf.spring.constructor.Person">-->
+		<!--<property name="userName" value="llf"></property>-->
+		<!--&lt;!&ndash; 引用Car的bean id为car&ndash;&gt;-->
+		<!--<property name="car" ref="car"></property>-->
+		<!--&lt;!&ndash; 级联赋值 给car里的其他属性赋值或重新赋值（了解） 如下&ndash;&gt;-->
+		<!--&lt;!&ndash;<property name="car.speed" value="120"></property>&ndash;&gt;-->
+
+		<!--<property name="age" value="21"></property>-->
+	<!--</bean>-->
+
+	<!-- 声明使用内部 bean -->
+	<!--<bean id="person2" class="com.llf.spring.constructor.Person">-->
+		<!--<property name="userName" value="llf"></property>-->
+		<!--&lt;!&ndash; 内部 bean&ndash;&gt;-->
+		<!--<property name="car">-->
+			<!--<bean class="com.llf.spring.constructor.Car">-->
+				<!--<property name="carName" value="Aodi2"></property>-->
+				<!--<property name="price" value="290000"></property>-->
+				<!--<property name="speed" value="300"></property>-->
+			<!--</bean>-->
+		<!--</property>-->
+		<!--<property name="age" value="21"></property>-->
+	<!--</bean>-->
+
+	
+	<!-- 装配集合属性 List -->
+	<!--<bean id="newPerson1" class="com.llf.spring.constructor.NewPerson">-->
+		<!--<property name="userName" value="fzy"></property>-->
+		<!--<property name="age" value="21"></property>-->
+		<!--<property name="carList">-->
+			<!--<list>-->
+				<!--<ref bean="car"></ref>-->
+				<!--<ref bean="car1"></ref>-->
+			<!--</list>-->
+		<!--</property>-->
+	<!--</bean>-->
+
+	<!-- map集合bean的配置-->
+	<!--<bean id="newPerson" class="com.llf.spring.constructor.NewPerson">-->
+		<!--<property name="name" value="llf"></property>-->
+		<!--<property name="age" value="21"></property>-->
+		<!--<property name="carMap">-->
+		<!--<map>-->
+			<!--<entry key="aa" value-ref="car"></entry>-->
+			<!--<entry key="bb" value-ref="car1"></entry>-->
+		<!--</map>-->
+		<!--</property>-->
+	<!--</bean>-->
+
+	<!-- Properties的配置使用-->
+	<bean id="dataSource" class="com.llf.spring.day5_12.constructor.DataSource">
+		<property name="properties">
+			<props>
+				<prop key="user">root</prop>
+				<prop key="password">123456</prop>
+				<prop key="jdbcUrl">jdbc:mysql:///myhibernate</prop>
+				<prop key="driverClass">com.mysql.jdbc.Driver</prop>
+			</props> 
+		</property>
+	</bean>
+
+	<!-- 声明集合类型的 bean  需要导入util命名空间-->
+	<util:list id="cars">
+		<ref bean="car"/>
+		<ref bean="car2"/>
+	</util:list>
+
+	<!--声明集合类型的 bean的使用 -->
+	<bean id="newPerson3" class="com.llf.spring.day5_12.constructor.NewPerson">
+		<property name="name" value="fzy"></property>
+		<!-- 引用外部声明的 list -->
+		<property name="carList" ref="cars"></property>
+	</bean>
+
+	<!--使用p的命名空间来配置bean  更加简洁 -->
+	<bean id="person3" class="com.llf.spring.day5_12.constructor.Person" p:age="22" p:car-ref="car"
+		  p:userName="llf">
+	</bean>
+	
+</beans>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- 自动装配: 只声明 bean, 而把 bean 之间的关系交给 IOC 容器来完成 -->
+	<!--  
+		byType: 根据类型进行自动装配. 但要求 IOC 容器中只有一个类型对应的 bean, 若有多个则无法完成自动装配.抛出异常
+		byName: 根据bean的id名字 和 setter 风格的属性名进行自动装配 . 若没有id一致的, 则无法完成自动装配
+	-->
+	<!-- 在使用 XML 配置时, 自动转配用的不多. 但在基于 注解 的配置时, 自动装配使用的较多.  -->
+	<bean id="car" class="com.llf.spring.day5_13.autowire.Car">
+		<property name="name" value="BWM"></property>
+		<property name="price" value="250000"></property>
+	</bean>
+
+	<bean id="address" class="com.llf.spring.day5_13.autowire.Address">
+		<property name="addName" value="福建师范大学"></property>
+	</bean>
+	<bean id="address2" class="com.llf.spring.day5_13.autowire.Address">
+		<property name="addName" value="福建师范大学2"></property>
+	</bean>
+
+	<bean id="person" class="com.llf.spring.day5_13.autowire.Person" p:name="llf"
+		  autowire="byName">
+	</bean>
+	
+</beans>

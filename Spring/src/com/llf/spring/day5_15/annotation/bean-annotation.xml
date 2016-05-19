@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        <!-- 注解的声明！ -->
+        <!--
+        base-package 属性指定一个需要扫描的基类包，Spring 容器将会扫描这个基类包里及其子包中的所有类.
+            当需要扫描多个包时, 可以使用逗号分隔.
+        可使用 resource-pattern 属性过滤特定的类 如：  resource-pattern="respository/*.class"-->
+        <context:component-scan base-package="com.llf.spring.day5_15.annotation">
+            <!-- <context:include-filter> 子节点表示要包含的目标类 <context:exclude-filter> 子节点表示要排除在外的目标类  此时要声明use-default-filters="false" 才能过滤其他的注解类-->
+            <!--<context:include-filter type="assignable" expression="com.llf.spring.day5_15.annotation.respository.TestRespository"/>-->
+            <!--<context:exclude-filter type="assignable" expression="com.llf.spring.day5_15.annotation.component.TestComponent"/>-->
+        </context:component-scan>
+    </beans>

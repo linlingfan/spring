@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<!-- 配置一个 bean -->
+	<bean id="helloSpring" class="com.llf.spring.day5_12.hellospring.HelloSpring">
+		<!-- 为属性赋值 -->
+		<property name="name" value="linlingfan"></property>
+	</bean>
+
+
+	<!--创建一个car的bean-->
+	<bean id="car" class="com.llf.spring.day5_12.constructor.Car">
+		<property name="carName" value="Aodi"></property>
+		<property name="price" value="270000"></property>
+		<property name="speed" value="278"></property>
+	</bean>
+	<!-- 通过构造器注入属性值 -->
+	<bean id="car1" class="com.llf.spring.day5_12.constructor.Car">
+		<!-- 要求: 在 Bean 中必须有对应的构造器.  -->
+		<constructor-arg value="Ford" index="0"></constructor-arg>
+		<constructor-arg value="300000" index="1"></constructor-arg>
+		<constructor-arg type="int">
+			<value>260</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 若一个 bean 有多个构造器, 如何通过构造器来为 bean 的属性赋值 -->
+	<!-- 可以根据 index 和 value 进行更加精确的定位. (了解) -->
+	<bean id="car2" class="com.llf.spring.day5_12.constructor.Car">
+		<constructor-arg index="0">
+			<!--若字面值中包含特殊字符如要打出<BWM>, 则可以使用 DCDATA 来进行赋值. (了解)-->
+			<value><![CDATA[<BMW>]]></value>
+		</constructor-arg>
+		<constructor-arg value="250000" type="double" index="1"></constructor-arg>
+	</bean>
+
+	<!--测试 引用其他的Bean 创建person的Bean 引用car的bean -->
+	<bean id="person" class="com.llf.spring.day5_12.constructor.Person">
+		<property name="userName" value="llf"></property>
+		<!-- 引用Car的bean id为car-->
+		<property name="car" ref="car"></property>
+		<!-- 级联赋值 给car里的其他属性赋值或重新赋值（了解） 如下-->
+		<!--<property name="car.speed" value="120"></property>-->
+
+		<property name="age" value="21"></property>
+	</bean>
+
+	<!-- 声明使用内部 bean -->
+	<bean id="person2" class="com.llf.spring.day5_12.constructor.Person">
+		<property name="userName" value="llf"></property>
+		<!-- 内部 bean-->
+		<property name="car">
+			<bean class="com.llf.spring.day5_12.constructor.Car">
+				<property name="carName" value="Aodi2"></property>
+				<property name="price" value="290000"></property>
+				<property name="speed" value="300"></property>
+			</bean>
+		</property>
+		<property name="age" value="21"></property>
+	</bean>
+
+	
+	<!-- 装配集合属性 -->
+	<!--<bean id="user" class="com.atguigu.spring.helloworld.User">-->
+		<!--<property name="userName" value="Jack"></property>-->
+		<!--<property name="cars">-->
+			<!--&lt;!&ndash; 使用 list 元素来装配集合属性 &ndash;&gt;-->
+			<!--<list>-->
+				<!--<ref bean="car"/>-->
+				<!--<ref bean="car2"/>-->
+			<!--</list>-->
+		<!--</property>-->
+	<!--</bean>-->
+	
+	<!-- 声明集合类型的 bean -->
+	<!--<util:list id="cars">-->
+		<!--<ref bean="car"/>-->
+		<!--<ref bean="car2"/>-->
+	<!--</util:list>-->
+	<!-- -->
+	<!--<bean id="user2" class="com.atguigu.spring.helloworld.User">-->
+		<!--<property name="userName" value="Rose"></property>-->
+		<!--&lt;!&ndash; 引用外部声明的 list &ndash;&gt;-->
+		<!--<property name="cars" ref="cars"></property>-->
+	<!--</bean>-->
+	<!-- -->
+	<!--<bean id="user3" class="com.atguigu.spring.helloworld.User"-->
+		<!--p:cars-ref="cars" p:userName="Titannic"></bean>-->
+		
+	<!-- bean 的配置能够继承吗 ? 使用 parent 来完成继承 -->	
+	<!--<bean id="user4" parent="user" p:userName="Bob"></bean>-->
+	<!-- -->
+	<!--<bean id="user6" parent="user" p:userName="维多利亚"></bean>-->
+	<!-- -->
+	<!--&lt;!&ndash; 测试 depents-on &ndash;&gt;	-->
+	<!--<bean id="user5" parent="user" p:userName="Backham" depends-on="user6"></bean>-->
+	
+</beans>

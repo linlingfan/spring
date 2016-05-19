@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+<!-- 测试使用外部的属性文件-->
+    <!-- 导入配置文件-->
+    <context:property-placeholder location="classpath:com/llf/spring/day5_14/useoutconfig/db.properties"></context:property-placeholder>
+    <!-- 使用外部属性文件进行数据库配置  使用类似el表达式的方式赋值 ${}-->
+    <bean id="dataSource2" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${user}"></property>
+        <property name="password" value="${password}"></property>
+        <property name="driverClass" value="${driverClass}"></property>
+        <property name="jdbcUrl" value="${jdbcUrl}"></property>
+    </bean>
+
+
+    <!--常规 配置数据库连接-->
+    <!--<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+        <!--<property name="user" value="root"></property>-->
+        <!--<property name="password" value="123456"></property>-->
+        <!--<property name="driverClass" value="com.mysql.jdbc.Driver"></property>-->
+        <!--<property name="jdbcUrl" value="jdbc:mysql:///myhibernate"></property>-->
+    <!--</bean>-->
+</beans>

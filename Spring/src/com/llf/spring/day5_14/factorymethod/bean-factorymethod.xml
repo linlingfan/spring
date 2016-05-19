@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+<!--调用静态工厂方法创建 Bean是将对象创建的过程封装到静态方法中. 当客户端需要对象时, 只需要简单地调用静态方法, 而不同关心创建对象的细节.
+要声明通过静态方法创建的 Bean, 需要在 Bean 的 class 属性里指定拥有该工厂的方法的类, 同时在 factory-method 属性里指定工厂方法的名称. 最后, 使用 <constrctor-arg> 元素为该方法传递方法参数.
+-->
+    <!-- 通过静态工厂bean配置bean 注意不是配置静态工厂方法的实例，是bean的实例-->
+    <bean id="car1" class="com.llf.spring.day5_14.factorymethod.StaticFactory"
+            factory-method="getCar">
+        <!-- getCar要传参数 可以如下配置-->
+        <constructor-arg value="BMW"></constructor-arg>
+    </bean>
+
+    <!-- 实例工厂方法: 1将对象的创建过程封装到另外一个对象实例的方法里. 当客户端需要请求对象时,
+                    只需要简单的调用该实例方法而不需要关心对象的创建细节.
+                    2要声明通过实例工厂方法创建的 Bean,
+                    在 bean 的 factory-bean属性里指定拥有该工厂方法的Bean ;
+                    在 factory-method 属性里指定该工厂方法的名称 使用 construtor-arg 元素为工厂方法传递方法参数
+-->
+    <!-- 配置工厂的实例
+    实例工厂方法 ：就是要创建工厂本身，然后实例化该工厂，再去调用工厂的实例方法来返回bean
+    -->
+    <bean id="instanceBeanFactory" class="com.llf.spring.day5_14.factorymethod.InstanceFactory"></bean>
+    <!-- 通过工厂实例方法来配置bean-->
+    <bean id="car2" factory-bean="instanceBeanFactory" factory-method="getCar">
+        <constructor-arg value="bieke"></constructor-arg>
+    </bean>
+
+
+    </beans>

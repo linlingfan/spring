@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+   <!-- bean的生命周期在 Bean 的声明里设置 init-method 和 destroy-method 属性 来指定bean的初始化和销毁方法-->
+    <bean id="car" class="com.llf.spring.day5_14.cycle.Car" init-method="init1" destroy-method="destory1">
+        <property name="carName" value="#{'BMW'}"></property>
+        <property name="speed" value="300"></property>
+        <property name="price" value="#{100000+400000}"></property>
+    </bean>
+
+    <!-- 实现BeanPostProcessor 借口，并具体提供
+        postProcessBeforeInitialization(Object bean, String beanName) init-methord 之前被调用
+        postProcessAfterInitialization(Object bean, String beanName)  init-methord 之后被调用
+        这个很强大，对 Bean 进行额外的处理，可以在bean初始化后set属性之后再次对set的属性值进行修改。
+        bean ：bean是bean本身
+        beanName：bean的名字
+        返回值：实际上是返回给用户的那个bean，不过也可以在两个方法中修改返回的bean，或返回一个新的bean
+
+        Bean 后置处理器对 IOC 容器里的所有 Bean 实例逐一处理, 而非单一实例.
+        其典型应用是: 检查 Bean 属性的正确性或根据特定的标准更改 Bean 的属性  所以很经常加个if（）判断是哪个bean，在处理
+    -->
+    <!-- 配置bean 的后置处理器-->
+    <bean class="com.llf.spring.day5_14.cycle.MyPostProcessor"></bean>
+
+
+</beans>

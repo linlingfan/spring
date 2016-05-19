@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- FactoryBean 配置bean的实例
+        class只想FactoryBean的全类名
+        实际返回的实例却是FactoryBean里的 getObject（）方法返回的实例
+    -->
+        <bean id="car" class="com.llf.spring.day5_14.BeanFactory.CarFactoryBean">
+            <property name="speed" value="333"></property>
+        </bean>
+
+
+    </beans>
